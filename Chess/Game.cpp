@@ -239,31 +239,12 @@ void Game::Logic() {
 					&& currentSelectCamp == currentOperateCamp) {//选中的棋子与当前操作阵营相同
 					if (!isMoveClick && !isEatClick) {//棋子未移动
 						piece->isHighlighted = true;//先设置棋子自身的高亮
-						(this->*logicCall[piece->GetPieceType()])(piece);
-						switch (piece->GetPieceType()) {//根据棋子类型设置对应棋子的高亮
-							case PieceType::King:
-								//logicKing(piece);//检测是否能王车易位
-								if (isWhiteCastling) 
-									board[7][7]->isHighlighted = true;//设置右下角的车高亮
-								if (isBlackCastling) 
-									board[0][0]->isHighlighted = true;//设置左上角的车高亮
-								break;
-							case PieceType::Queen:
-								//logicQueen(piece);
-								break;
-							case PieceType::Rook:
-								//logicRook(piece);
-								break;
-							case PieceType::Bishop:
-								//logicBishop(piece);
-								break;
-							case PieceType::Knight:
-								//logicKnight(piece);
-								break;
-							case PieceType::Pawn:
-								//logicPawn(dynamic_cast<Pawn*>(piece));
-								break;
-						}
+						(this->*logicCall[piece->GetPieceType()])(piece);//使用函数指针调用对应类型的函数
+						//TODO 处理王车易位
+						if (isWhiteCastling) 
+							board[7][7]->isHighlighted = true;//设置右下角的车高亮
+						if (isBlackCastling) 
+							board[0][0]->isHighlighted = true;//设置左上角的车高亮
 					}
 					else if(isMoveClick){//棋子移动
 						if (lastFirstMovePawn != NULL)
